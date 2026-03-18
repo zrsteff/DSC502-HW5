@@ -1,0 +1,61 @@
+---
+title: "HW5 - Steffens"
+author: "Zach Steffens"
+date: "2026-03-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(mapdata)
+
+load("C://Users//zrsm9//Downloads//wind_turbines.rda")
+states = map_data("state")
+california = states %>% 
+  filter(region == "california")
+
+```
+
+```{r}
+wind_ca = wind_turbines %>% 
+  filter(t_state == "CA")
+
+```
+
+```{r}
+ggplot() +
+  geom_polygon(
+    data = california,
+    aes(x = long, y = lat, group = group),
+    fill = "grey90",
+    color = "black"
+  ) +
+  coord_fixed(1.3) +
+  theme_minimal()
+
+```
+```{r}
+ggplot() +
+  geom_polygon(
+    data = california,
+    aes(x = long, y = lat, group = group),
+    fill = "blue",
+    color = "black"
+  ) +
+  geom_point(
+    data = wind_ca,
+    aes(x = xlong, y = ylat),
+    color = "orange",
+    size = 1.2
+  ) +
+  coord_fixed(1.3) +
+  guides(fill = "none") +
+  theme_minimal()
+
+```
+
